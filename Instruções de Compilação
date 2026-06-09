@@ -1,0 +1,21 @@
+Para compilar no Linux:
+make
+Atalho: CTRL + ALT + N
+
+Para compilar para Windows:
+make TARGET=WINDOWS
+Atalho: CTRL + SHIFT + B
+
+Para compilar Portable:
+g++ src/*.cpp src/glad.c -Iinclude -Llib-mingw-w64 -lglfw3 -lopengl32 -lgdi32 -lwinmm -static-libgcc -static-libstdc++ -static -o build/Portable.exe
+**Na pasta do projeto
+**Shaders devem estar na mesma pasta que o .exe
+
+Para limpar pasta build:
+make clean
+
+////////////////////////////////////
+
+mingw-w64 - msys64
+
+ATENÇÃO: este arquivo precisa da pastas shaders no mesmo diretorio para rodar

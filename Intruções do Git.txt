@@ -1,0 +1,20 @@
+$ git config --global user.email "kemperxlx@gmail.com"
+git config --global user.name "eriksander-code"
+
+# 1. Inicializa o Git na pasta do projeto
+git init
+
+# 2. Adiciona TODOS os arquivos (use o ponto . em vez de README.md)
+git add .
+
+# 3. Faz o commit com a sua mensagem
+git commit -m "first commit"
+
+# 4. Define a branch principal
+git branch -M main
+
+# 5. Conecta com o seu link correto
+git remote add origin https://github.com/eriksander-code/StarCollector.git
+
+# 6. Sobe tudo para o site
+git push -u origin main
