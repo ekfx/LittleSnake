@@ -1,8 +1,7 @@
 #include "Program.h"
 
-class LittleSnake2D {
+class LittleSnake : public Program {
 private:
-
 
     // Vertex
     u32 MyEBO[6] {
@@ -23,8 +22,8 @@ public:
 
     void InitEnvironment();                         // Inicia o ambiente com COnfiguracoes personalziadas
     void Initialize();                              // inicializa RECURSOS
-    void Input(GLFWwindow* window, float Delta);    // Entrada do jogador
-    void ProcessPhysics(float Delta);               // processa fisica
+    void Input(GLFWwindow* window, f32 Delta);    // Entrada do jogador
+    void ProcessPhysics(f32 Delta);               // processa fisica
     void Processing();                              // processamento
     void Render();                                  // render
     void Release();                                 // Deletes

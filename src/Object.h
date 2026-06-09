@@ -19,7 +19,7 @@
 #include "Core.h"
 
 class BOX_OBJECT_MANAGER {
-private:
+public:
     struct BOX_OBJECT {
         glm::vec3 position;
         glm::vec3 velocity;
@@ -27,8 +27,10 @@ private:
         f32 weight;
     };
 
-public:
+private:
     std::vector<BOX_OBJECT> ObjectArray;
+
+public:
 
     BOX_OBJECT_MANAGER();
     ~BOX_OBJECT_MANAGER();
@@ -40,7 +42,7 @@ public:
     void JumpObject(f32 delta_time, u32 index);
     
     // Generators
-    u32 CreateOneObject(glm::vec3 position = glm::vec3(10.0f,  10.0f,  10.0f), 
+    BOX_OBJECT* CreateOneObject(glm::vec3 position = glm::vec3(10.0f,  10.0f,  10.0f), 
                         f32 weight = 10.0f, 
                         glm::vec3 velocity = glm::vec3(50.0f,  0.0f,  50.0f), 
                         glm::vec4 color = glm::vec4(1.0f,  0.8f,  0.6f, 1.0f));

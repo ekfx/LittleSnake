@@ -8,14 +8,16 @@ BOX_OBJECT_MANAGER::~BOX_OBJECT_MANAGER()
 {
 }
 
-u32 BOX_OBJECT_MANAGER::CreateOneObject(glm::vec3 position, f32 weight, glm::vec3 velocity, glm::vec4 color) {
+BOX_OBJECT_MANAGER::BOX_OBJECT* BOX_OBJECT_MANAGER::CreateOneObject(glm::vec3 position, f32 weight, glm::vec3 velocity, glm::vec4 color) {
     BOX_OBJECT temp;
     temp.position = position;
     temp.weight = weight;
     temp.velocity = velocity;
     temp.color = color;
     ObjectArray.push_back(temp);
-    return ObjectArray.size()-1;
+    return &ObjectArray.at(ObjectArray.size()-1);
+    // retorna endereço
+    // Por que? se fosse um u32 teria que criar chamar ObjectArrat.at()... toda vez
 }
 
 void BOX_OBJECT_MANAGER::SetObjectVelocity(u32 index, glm::vec3 velocity) {

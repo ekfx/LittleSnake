@@ -1,8 +1,8 @@
 #include <iostream>
-#include "StarCollector.h"
+#include "LittleSnake.h"
 
 int main() {
-    StarCollector Game;
+    LittleSnake Game;
     Game.Loop(); 
     
     return 0;
