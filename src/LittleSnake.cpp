@@ -2,7 +2,7 @@
 
 void LittleSnake::InitEnvironment() 
 {
-    s.Start(MyObjects.ObjectArray, 20, -(WidthSpace/2), (WidthSpace/2), (HeightSpace/2), -(HeightSpace/2), 1.0f);
+    s.Start(MyObjects.ObjectArray, 40, -(WidthSpace/2), (WidthSpace/2), (HeightSpace/2), -(HeightSpace/2), 1.0f);
 
     SetVSync(false);
 
@@ -13,6 +13,7 @@ void LittleSnake::InitEnvironment()
             ImGui::InputFloat("Zoom", &CameraZoom, 0.1f, 0.1f, "%.3f", 0);
             ImGui::InputFloat("Width", &WidthSpace, 1.0f, 1.0f, "%.3f", 0);
             ImGui::InputFloat("Height", &HeightSpace, 1.0f, 1.0f, "%.3f", 0);
+            ImGui::InputFloat("SnakeVelocity", &SnakeVelocity, 0.1f, 0.1f, "%.3f", 0);
         ImGui::End();
     });
 }
@@ -53,7 +54,7 @@ void LittleSnake::ProcessPhysics(f32 Delta)
     }
 
     // left top right bottom
-    s.SetSpace(-(WidthSpace/2), (HeightSpace/2), (WidthSpace/2), -(HeightSpace/2));
+    s.SetSpace(-(WidthSpace/2), (HeightSpace/2), (WidthSpace/2), -(HeightSpace/2), SnakeVelocity);
 
 }
 
@@ -83,6 +84,8 @@ void LittleSnake::Render()
         MyModel = glm::translate(MyModel, MyObjects.ObjectArray.at(i).position);
 
         if (i == 0) {
+            GlobalShader.SetInt("Actor", 0);
+        } else if (i % 2 == 0) {
             GlobalShader.SetInt("Actor", 0);
         } else {
             GlobalShader.SetInt("Actor", 1);

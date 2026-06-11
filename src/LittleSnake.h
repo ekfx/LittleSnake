@@ -11,6 +11,7 @@ private:
     f32 CameraZoom = 1.0f;
     f32 WidthSpace = 45.0f;
     f32 HeightSpace = 35.0f;
+    f32 SnakeVelocity = 1.0f;
 
     /////////////////////
 

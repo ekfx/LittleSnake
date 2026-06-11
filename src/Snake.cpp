@@ -21,7 +21,6 @@ void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float 
         TempObj.position.z = 0;
 
         Body.push_back(TempObj);
-        std::cout << "POSICAO PARTE " << i << ": " << TempObj.position.x << "x" << TempObj.position.y << std::endl;
     }
 }
 
@@ -63,13 +62,14 @@ void Snake::Walk(std::vector<ObjectManager::Object>& Body) {
 }
 
 void Snake::SetDirectionAxis(int axis, int direction) {
-    TargetAxis = axis;
-    Direction = direction;
+    TargetAxis   = axis;
+    Direction    = direction;
 }
 
-void Snake::SetSpace(float l, float t, float r, float b) {
-    Left = l;
-    Right = r;
-    Top = t;
-    Bottom = b;
+void Snake::SetSpace(float l, float t, float r, float b, float v) {
+    Left         = l;
+    Right        = r;
+    Top          = t;
+    Bottom       = b;
+    Velocity     = v;
 }

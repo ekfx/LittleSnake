@@ -1,8 +1,6 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <vector>
-#include <iostream>
 #include "Object.h"
 #include "Core.h"
 
@@ -25,7 +23,7 @@ public:
     void Walk(std::vector<ObjectManager::Object>& Body);
 
     void SetDirectionAxis(int axis, int direction);
-    void SetSpace(float l, float t, float r, float b);
+    void SetSpace(float l, float t, float r, float b, float v);
 };
 
 #endif // SNAKE_H
