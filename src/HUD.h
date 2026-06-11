@@ -50,7 +50,7 @@ public:
 
     void SetCustomRenderFunction(std::function<void()> custom_render_function_lambda);
     void Start(GLFWwindow* window);
-    void Run(float window_width, float window_height);
+    void Run(float window_width, float window_height, bool debug_window);
     void Release();
 
 };

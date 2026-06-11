@@ -8,8 +8,6 @@ Texture::Texture() {
 
 };
 Texture::~Texture() {
-    if (TextureID != 0)
-        glDeleteTextures(1, &TextureID);
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -60,6 +58,11 @@ void Texture::ProcessImage(bool unbind) {
 
     if (unbind) 
         glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::ReleaseTexture() {
+    if (TextureID != 0)
+        glDeleteTextures(1, &TextureID);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

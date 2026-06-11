@@ -1,6 +1,6 @@
 #include "Program.h"
 
-void Program::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void Program::framebuffer_size_callback(GLFWwindow* window, i32 width, i32 height) {
     glViewport(0, 0, width, height);
 } 
 
@@ -33,6 +33,7 @@ void Program::Essential() {
 }
 
 void Program::ProcessEssential() {
+    glClear(GL_COLOR_BUFFER_BIT);   // tem que ser definido mesmo fora do set3d
     MyClock.ProcessDelta();
     UpdateWindowName(true, 64.0f);
     Input(MyOpenGL.GetWindow(), MyClock.GetDeltaTime());
@@ -68,11 +69,11 @@ void Program::Processing()
 {
 }
 
-void Program::ProcessPhysics(float Delta) 
+void Program::ProcessPhysics(f32 Delta) 
 {
 }
 
-void Program::Input(GLFWwindow* window, float Delta) 
+void Program::Input(GLFWwindow* window, f32 Delta) 
 {    
 }
 
@@ -86,7 +87,7 @@ void Program::Release()
 
 
 // Configs
-void Program::UpdateWindowName(bool if_run, float miliseconds) {
+void Program::UpdateWindowName(bool if_run, f32 miliseconds) {
     if (if_run) {
         if (MyTimer.Update(MyClock, miliseconds)) {
             glfwSetWindowTitle(GetWindowHandle(), TimerUI::GetFPSandMS(MyClock).c_str());    
@@ -111,12 +112,16 @@ f32 Program::GetWindowAspectRatio() {
     return (f32)MyOpenGL.GetWindowAspectRatio();
 }
 
+std::string Program::GetInfoLog() {
+    return InfoLog;
+}
+
 void Program::SetVSync(bool off_on) {
     MyOpenGL.SetVSync(off_on);
 }
 
 // Setters
-void Program::SetBackgroundColor(int program_color) {
+void Program::SetBackgroundColor(i32 program_color) {
     switch (program_color) {
         case ENGINE::WINDOW::RED_BACKGROUND:         glClearColor(1.0f, 0.0f, 0.0f, 1.0f); break;
         case ENGINE::WINDOW::BLUE_BACKGROUND:        glClearColor(0.0f, 0.0f, 1.0f, 1.0f); break;

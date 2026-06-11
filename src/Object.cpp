@@ -1,30 +1,28 @@
 #include "Object.h"
 
-BOX_OBJECT_MANAGER::BOX_OBJECT_MANAGER() 
+ObjectManager::ObjectManager() 
 {
 }
 
-BOX_OBJECT_MANAGER::~BOX_OBJECT_MANAGER() 
+ObjectManager::~ObjectManager() 
 {
 }
 
-BOX_OBJECT_MANAGER::BOX_OBJECT* BOX_OBJECT_MANAGER::CreateOneObject(glm::vec3 position, f32 weight, glm::vec3 velocity, glm::vec4 color) {
-    BOX_OBJECT temp;
+u32 ObjectManager::CreateOneObject(glm::vec3 position, f32 weight, glm::vec3 velocity, glm::vec4 color) {
+    Object temp;
     temp.position = position;
     temp.weight = weight;
     temp.velocity = velocity;
     temp.color = color;
     ObjectArray.push_back(temp);
-    return &ObjectArray.at(ObjectArray.size()-1);
-    // retorna endereço
-    // Por que? se fosse um u32 teria que criar chamar ObjectArrat.at()... toda vez
+    return ObjectArray.size()-1;
 }
 
-void BOX_OBJECT_MANAGER::SetObjectVelocity(u32 index, glm::vec3 velocity) {
+void ObjectManager::SetObjectVelocity(u32 index, glm::vec3 velocity) {
     ObjectArray.at(index).velocity = velocity;
 }
 
-void BOX_OBJECT_MANAGER::MoveObject(i32 axis, i32 movement, f32 delta_time, u32 index) {
+void ObjectManager::MoveObject(i32 axis, i32 movement, f32 delta_time, u32 index) {
     if (axis == ENGINE::AXIS::X_AXIS) {
         ObjectArray.at(index).position.x += (ObjectArray.at(index).velocity.x*delta_time)*movement;
     }
@@ -38,11 +36,11 @@ void BOX_OBJECT_MANAGER::MoveObject(i32 axis, i32 movement, f32 delta_time, u32 
     }
 }
 
-void BOX_OBJECT_MANAGER::JumpObject(f32 delta_time, u32 index) {
+void ObjectManager::JumpObject(f32 delta_time, u32 index) {
     ObjectArray.at(index).velocity.y += 75.0f*delta_time;
 }
 
-void BOX_OBJECT_MANAGER::CreateNewObjects(i32 quantity, f32 interval_xa, f32 interval_xb, f32 interval_ya, f32 interval_yb, f32 interval_za, f32 interval_zb, f32 weight, glm::vec4 color) {
+void ObjectManager::CreateNewObjects(i32 quantity, f32 interval_xa, f32 interval_xb, f32 interval_ya, f32 interval_yb, f32 interval_za, f32 interval_zb, f32 weight, glm::vec4 color) {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<f32> Nx(interval_xa, interval_xb);
@@ -51,7 +49,7 @@ void BOX_OBJECT_MANAGER::CreateNewObjects(i32 quantity, f32 interval_xa, f32 int
     f32 x = Nx(mt);
     f32 y = Ny(mt);
     f32 z = Nz(mt);
-    BOX_OBJECT temp;
+    Object temp;
 
     for (int i = 1; i <= quantity; i++) {
         temp.position = glm::vec3(x,y,z);
@@ -64,8 +62,18 @@ void BOX_OBJECT_MANAGER::CreateNewObjects(i32 quantity, f32 interval_xa, f32 int
     }
 }
 
-void BOX_OBJECT_MANAGER::CreatePlan(i32 start_x, i32 end_x, i32 start_z, i32 end_z, glm::vec4 color) {
-    BOX_OBJECT temp;
+void ObjectManager::CreateLineObjects(i32 quantity) {
+    Object temp;
+    temp.position = glm::vec3(0.0f);
+
+    for (int i = 0; i < quantity; i++) {
+        temp.position = glm::vec3((f32)i/10, 0.0f, 0.0f);
+        ObjectArray.push_back(temp);
+    }
+}
+
+void ObjectManager::CreatePlan(i32 start_x, i32 end_x, i32 start_z, i32 end_z, glm::vec4 color) {
+    Object temp;
     temp.position = glm::vec3(1.0f, 0.0f, 1.0f);
 
     for (int i = start_x; i <= end_x; i++) {

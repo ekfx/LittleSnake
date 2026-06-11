@@ -60,6 +60,7 @@ public:
     void AttachShaderProgram();
     void LinkShaderProgram();
     void ReleaseShaders();
+    void ReleaseShaderProgram();
     void Use(i32 unbind = 1);
     u32 GetShaderProgramID();
     std::string GetShaderProgram();

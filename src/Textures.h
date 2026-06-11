@@ -27,6 +27,7 @@ public:
     void BasicTexture(i32 texture_slot, i32 texture_type, i32 texture_interpolation_type, const char* path_image, bool flip_image, bool unbind);
     void CreateTexture(i32 texture_slot, i32 texture_type);
     void ConfigTexture(i32 texture_type, i32 texture_interpolation_type);
+    void ReleaseTexture();
 
     /////////////////////////////////////////////////////////////////////////////////
     // Load Assets

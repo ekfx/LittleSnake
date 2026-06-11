@@ -78,6 +78,7 @@ public:
     f32 GetWindowHeight();
     f32 GetWindowWidth();
     f32 GetWindowAspectRatio();
+    std::string GetInfoLog();
     
     // Setters
     void SetBackgroundColor(i32 program_color);

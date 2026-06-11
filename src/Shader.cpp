@@ -2,14 +2,10 @@
 
 Shader::Shader() 
 {
-    
 }
 
 Shader::~Shader() 
 {
-    if (ShaderProgID != 0)
-        glDeleteProgram(ShaderProgID);
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +127,11 @@ void Shader::ReleaseShaders()
 
     glDeleteShader(fShaderID); // ja foram vinculados e compilados   
     fShaderID = 0;
+}
+
+void Shader::ReleaseShaderProgram() {
+    if (ShaderProgID != 0)
+        glDeleteProgram(GetShaderProgramID());
 }
 
 // Use shader program

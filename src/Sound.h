@@ -2,6 +2,7 @@
 #define SOUND_H
 
 #include <string>
+#include <iostream>
 #include "../include/miniaudio/miniaudio.h"
 
 class SoundCore {       // A ESTUDAR MELHOR
@@ -12,10 +13,12 @@ private:
 
 public:
     // construtor e destrutor
-    SoundCore();
-    ~SoundCore();
+    SoundCore() {};
+    ~SoundCore() {};
 
     // Utilitarios
+    bool Init();    // thanks to SplinterOfChaos if you're seeing it
+    void Release();
     void SCPlaySound(const char* audio_path); // tocar som simples
 
 };

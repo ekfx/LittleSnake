@@ -1,7 +1,28 @@
+#ifndef LITTLESNAKE_H
+#define LITTLESNAKE_H
+
 #include "Program.h"
+#include "Snake.h"
 
 class LittleSnake : public Program {
 private:
+    /////////////////////    
+    // Properties
+    f32 CameraZoom = 1.0f;
+    f32 WidthSpace = 45.0f;
+    f32 HeightSpace = 35.0f;
+
+    /////////////////////
+
+    Shader GlobalShader;
+    HUD MyHUD;
+
+    Mesh MyMesh;
+    Texture MyTexture;
+    glm::mat4 MyModel;
+    ObjectManager MyObjects;
+
+    Snake s;
 
     // Vertex
     u32 MyEBO[6] {
@@ -28,3 +49,5 @@ public:
     void Render();                                  // render
     void Release();                                 // Deletes
 };
+
+#endif // LITTLESNAKE_H

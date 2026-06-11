@@ -19,7 +19,7 @@ void HUD::Start(GLFWwindow* window) {
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
-void HUD::Run(float window_width, float window_height) {
+void HUD::Run(float window_width, float window_height, bool debug_window) {
     float aspect_ratio = window_width/window_height;
     float hud_width = (window_width/100)*25;
     float hud_height = (window_height/100)*20;
@@ -28,12 +28,12 @@ void HUD::Run(float window_width, float window_height) {
         if (!ActivedHUD) return;    // termina funcao
 
         ImGuiStyle& HUDStyle = ImGui::GetStyle();
-        HUDStyle.Colors[ImGuiCol_Border] = ImVec4(0.0, 0.0f, 0.0f, 0.0f);
-        HUDStyle.Colors[ImGuiCol_WindowBg] = ImVec4(0.25, 0.0f, 0.0f, 0.4f);
-        HUDStyle.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.7, 0.0f, 0.0f, 0.0f);
-        HUDStyle.Colors[ImGuiCol_TitleBg] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
-        HUDStyle.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
-        HUDStyle.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
+        // HUDStyle.Colors[ImGuiCol_Border] = ImVec4(0.0, 0.0f, 0.0f, 0.0f);
+        // HUDStyle.Colors[ImGuiCol_WindowBg] = ImVec4(0.25, 0.0f, 0.0f, 0.4f);
+        // HUDStyle.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.7, 0.0f, 0.0f, 0.0f);
+        // HUDStyle.Colors[ImGuiCol_TitleBg] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
+        // HUDStyle.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
+        // HUDStyle.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.7, 0.0f, 0.0f, 0.8f);
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -43,6 +43,11 @@ void HUD::Run(float window_width, float window_height) {
         ImGui::SetNextWindowSize(ImVec2(hud_width, hud_height));
 
         callback_custom_render();
+
+        if (debug_window) { 
+            ImGui::ShowStyleEditor(); 
+            ImGui::ShowMetricsWindow(); 
+        }
 
         ImGui::Render();
 
