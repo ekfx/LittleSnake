@@ -10,6 +10,7 @@ private:
     // Attributes
     float Elapsed;
     float _Delta;
+    float ChargeTime{0};
 
 public:
     // Constructor and Destructor
@@ -17,7 +18,8 @@ public:
     ~Timer();
 
     // Functions
-    bool Update(Clock& clock, float sec_interval);
+    bool Update(Clock& clock, float ms_interval);
+    bool UpdateTick(Clock& clock, float ms_interval);
 
 };
 

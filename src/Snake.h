@@ -18,12 +18,12 @@ private:
     float Velocity;
 
 public:
-    void Start(std::vector<ObjectManager::Object>& Body, int quantity, float left, float top, float right, float bottom, float velocity);
+    void Start(std::vector<ObjectManager::Object>& Body, int quantity, float width, float height, float velocity);
 
     void Walk(std::vector<ObjectManager::Object>& Body);
 
     void SetDirectionAxis(int axis, int direction);
-    void SetSpace(float l, float t, float r, float b, float v);
+    void SetSpace(float width, float height, float v);
 };
 
 #endif // SNAKE_H

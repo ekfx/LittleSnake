@@ -8,13 +8,16 @@ uniform sampler2D texture0;
 uniform sampler2D texture1;  
 
 uniform int Actor;
+uniform vec4 Color_;
 
 void main() {
     if (Actor == 0) {
         //FragColor = texture(texture0, vec2(TexCoord.x, TexCoord.y));
-        FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        FragColor = vec4(1.0, 0.0314, 0.0, 1.0);
     } else if (Actor == 1) {
         //FragColor = texture(texture0, vec2(TexCoord.x, TexCoord.y));
-        FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        FragColor = vec4(0.5725, 0.1333, 0.0, 1.0);
+    } else if (Actor == 2) {
+        FragColor = vec4(0.0118, 0.3686, 0.0, 1.0);
     }
 }

@@ -9,9 +9,8 @@ private:
     /////////////////////    
     // Properties
     f32 CameraZoom = 1.0f;
-    f32 WidthSpace = 45.0f;
-    f32 HeightSpace = 35.0f;
-    f32 SnakeVelocity = 1.0f;
+    f32 SnakeTick = 70.0f;
+    f32 SnakeDistanceParts = 1.0f;
 
     /////////////////////
 
@@ -22,6 +21,9 @@ private:
     Texture MyTexture;
     glm::mat4 MyModel;
     ObjectManager MyObjects;
+
+    ObjectManager Background;
+    glm::mat4 BgModel;
 
     Snake s;
 

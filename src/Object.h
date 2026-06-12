@@ -54,6 +54,7 @@ public:
     void CreateLineObjects(i32 quantity);
 
     void CreatePlan(i32 start_x, i32 end_x, 
+                    i32 start_y, i32 end_y, 
                     i32 start_z, i32 end_z, 
                     glm::vec4 color);
 };

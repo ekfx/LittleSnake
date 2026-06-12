@@ -2,7 +2,8 @@
 
 void LittleSnake::InitEnvironment() 
 {
-    s.Start(MyObjects.ObjectArray, 40, -(WidthSpace/2), (WidthSpace/2), (HeightSpace/2), -(HeightSpace/2), 1.0f);
+    s.Start(MyObjects.ObjectArray, 40, GetWindowWidth(), GetWindowHeight(), SnakeDistanceParts);
+    Background.CreatePlan(0, 10, 0, 10, 1, 1, glm::vec4(1.0f));
 
     SetVSync(false);
 
@@ -11,9 +12,8 @@ void LittleSnake::InitEnvironment()
     MyHUD.SetCustomRenderFunction([&]() {
         ImGui::Begin(" ", nullptr, ImGuiWindowFlags_NoResize);
             ImGui::InputFloat("Zoom", &CameraZoom, 0.1f, 0.1f, "%.3f", 0);
-            ImGui::InputFloat("Width", &WidthSpace, 1.0f, 1.0f, "%.3f", 0);
-            ImGui::InputFloat("Height", &HeightSpace, 1.0f, 1.0f, "%.3f", 0);
-            ImGui::InputFloat("SnakeVelocity", &SnakeVelocity, 0.1f, 0.1f, "%.3f", 0);
+            ImGui::InputFloat("SnakeTick", &SnakeTick, 1.0f, 1.0f, "%.3f", 0);
+            ImGui::InputFloat("SnakeDistanceParts", &SnakeDistanceParts, 0.1f, 0.1f, "%.3f", 0);
         ImGui::End();
     });
 }
@@ -49,12 +49,12 @@ void LittleSnake::Input(GLFWwindow* window, f32 Delta)
 
 void LittleSnake::ProcessPhysics(f32 Delta) 
 {
-    if (MyTimer.Update(MyClock, 60.0f)) {   // atualiza a cada 60ms
+    if (MyTimer.UpdateTick(MyClock, SnakeTick)) {   // atualiza a cada 70ms
         s.Walk(MyObjects.ObjectArray);
     }
 
     // left top right bottom
-    s.SetSpace(-(WidthSpace/2), (HeightSpace/2), (WidthSpace/2), -(HeightSpace/2), SnakeVelocity);
+    s.SetSpace(GetWindowWidth(), GetWindowHeight(), SnakeDistanceParts);
 
 }
 
@@ -78,14 +78,23 @@ void LittleSnake::Render()
     glBindTexture(GL_TEXTURE0, MyTexture.GetTextureID());
     glBindVertexArray(MyMesh.GetVAO());
 
+    for (int i = 0; i < Background.ObjectArray.size(); i++) {
+        BgModel = glm::mat4(1.0f);
+        BgModel = glm::translate(BgModel, glm::vec3(-0.5f, -0.5f, 0.0f));
+        BgModel = glm::scale(BgModel, glm::vec3(10.0f));
+
+        GlobalShader.SetInt("Actor", 2);
+
+        GlobalShader.SetMat4("model", BgModel);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+    }
+
     for (int i = 0; i < MyObjects.ObjectArray.size(); i++) {
         MyModel = glm::mat4(1.0f);
         MyModel = glm::scale(MyModel, glm::vec3(0.06125f));
         MyModel = glm::translate(MyModel, MyObjects.ObjectArray.at(i).position);
 
-        if (i == 0) {
-            GlobalShader.SetInt("Actor", 0);
-        } else if (i % 2 == 0) {
+        if (i % 2 == 0) {
             GlobalShader.SetInt("Actor", 0);
         } else {
             GlobalShader.SetInt("Actor", 1);

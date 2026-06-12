@@ -72,15 +72,23 @@ void ObjectManager::CreateLineObjects(i32 quantity) {
     }
 }
 
-void ObjectManager::CreatePlan(i32 start_x, i32 end_x, i32 start_z, i32 end_z, glm::vec4 color) {
+void ObjectManager::CreatePlan(i32 start_x, i32 end_x, i32 start_y, i32 end_y, i32 start_z, i32 end_z, glm::vec4 color) {
     Object temp;
     temp.position = glm::vec3(1.0f, 0.0f, 1.0f);
 
     for (int i = start_x; i <= end_x; i++) {
-        for (int j = start_z; j <= end_z; j++) {
-            temp.position = glm::vec3((f32)i, 0.0f, (f32)j);
-            temp.color = color;
-            ObjectArray.push_back(temp);
+        for (int j = start_y; j <= end_y; j++) {
+            for (int k = start_z; k <= end_z; k++) {
+                temp.position = glm::vec3((f32)i, (f32)j, (f32)k);
+                if (i % 2 == 0) {
+                    temp.color = glm::vec4(0.0118f, 0.3686f, 0.0f, 1.0f);
+                } 
+                if (j % 2 == 0) {
+                    temp.color = glm::vec4(0.0118f, 0.9f, 0.0f, 1.0f);
+                }
+                
+                ObjectArray.push_back(temp);
+            }
         }
         /*
             coluna i = 0: j0, j1, j2, j3, ...

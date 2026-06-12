@@ -1,17 +1,22 @@
 #include "Snake.h"
 
-void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float left, float top, float right, float bottom, float velocity) {
+void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float window_width, float window_height, float velocity) {
     /*
         Pode parecer estranho à primeira vista por conta do seu grid 40x40 mas o que acontece é que 
         as coordenadas da cobra são INDEPENDENTES do OpenGL, por isso é necessário diminuir
         a sua escala no loop for de render
     */
 
-    Left = left;
-    Right = right;
-    Top = top;
-    Bottom = bottom;
-    Velocity = velocity;
+    float AspectRatio = window_width/window_height;
+    float HeightSpace_ = 35.0f;
+
+    float WidthSpace_ = HeightSpace_ * AspectRatio;
+
+    Left         = -(WidthSpace_/2);
+    Right        = +(WidthSpace_/2);
+    Top          = +(HeightSpace_/2);
+    Bottom       = -(HeightSpace_/2);
+    Velocity     = velocity;
 
     ObjectManager::Object TempObj;
 
@@ -52,8 +57,6 @@ void Snake::Walk(std::vector<ObjectManager::Object>& Body) {
         }
     }
 
-    std::cout << Body.at(0).position.x << " - " << Body.at(0).position.y << std::endl;
-
     /*
         Funcionamento comum da cobrinha:
             puxa para a posição atual a posicao posterior
@@ -66,10 +69,24 @@ void Snake::SetDirectionAxis(int axis, int direction) {
     Direction    = direction;
 }
 
-void Snake::SetSpace(float l, float t, float r, float b, float v) {
-    Left         = l;
-    Right        = r;
-    Top          = t;
-    Bottom       = b;
+void Snake::SetSpace(float window_width, float window_height, float v) {
+    float AspectRatio = window_width/window_height;
+    float HeightSpace_ = 35.0f;
+
+    float WidthSpace_ = HeightSpace_ * AspectRatio;
+    /*
+        vai fazer um espaco x proporcional a altura.
+        
+        1920x1080
+        35.0 * 1.88 = 65.8
+
+        800x600
+        35.0 * 1.33 = 46.5
+    */
+
+    Left         = -(WidthSpace_/2);
+    Right        = +(WidthSpace_/2);
+    Top          = +(HeightSpace_/2);
+    Bottom       = -(HeightSpace_/2);
     Velocity     = v;
 }
