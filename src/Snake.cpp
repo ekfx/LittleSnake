@@ -90,3 +90,8 @@ void Snake::SetSpace(float window_width, float window_height, float v) {
     Bottom       = -(HeightSpace_/2);
     Velocity     = v;
 }
+
+void Snake::Add(std::vector<ObjectManager::Object>& Body) {
+    ObjectManager::Object TempObj;
+    Body.push_back(TempObj);
+}

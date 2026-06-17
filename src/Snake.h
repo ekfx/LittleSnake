@@ -24,6 +24,7 @@ public:
 
     void SetDirectionAxis(int axis, int direction);
     void SetSpace(float width, float height, float v);
+    void Add(std::vector<ObjectManager::Object>& Body);
 };
 
 #endif // SNAKE_H

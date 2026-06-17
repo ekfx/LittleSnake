@@ -3,10 +3,7 @@
 void LittleSnake::InitEnvironment() 
 {
     s.Start(MyObjects.ObjectArray, 40, GetWindowWidth(), GetWindowHeight(), SnakeDistanceParts);
-    Background.CreatePlan(0, 10, 0, 10, 1, 1, glm::vec4(1.0f));
-
     SetVSync(false);
-
 
     MyHUD.Start(GetWindowHandle());
     MyHUD.SetCustomRenderFunction([&]() {
@@ -20,6 +17,9 @@ void LittleSnake::InitEnvironment()
 
 void LittleSnake::Initialize() 
 {
+    Fruits.CreateOneObject(glm::vec3(0.2f, 0.2f, 0.2f), 10.0f,
+                           glm::vec3(1.0f), glm::vec4(1.0f));
+
     GlobalShader.CreateBasicShaders();
     MyMesh.CreateMesh(MyVertex, sizeof(MyVertex), MyEBO, sizeof(MyEBO), 1, 1, 0, 1);
     MyTexture.BasicTexture(GL_TEXTURE0, GL_TEXTURE_2D, GL_LINEAR, "../assets/snake_part.png", 1, 0);
@@ -56,6 +56,27 @@ void LittleSnake::ProcessPhysics(f32 Delta)
     // left top right bottom
     s.SetSpace(GetWindowWidth(), GetWindowHeight(), SnakeDistanceParts);
 
+    if (MyObjects.ObjectArray.at(0).position.x <= Fruits.ObjectArray.at(0).position.x + 1.1f &&
+        MyObjects.ObjectArray.at(0).position.x >= Fruits.ObjectArray.at(0).position.x - 1.1f &&
+        MyObjects.ObjectArray.at(0).position.y <= Fruits.ObjectArray.at(0).position.y + 1.1f &&
+        MyObjects.ObjectArray.at(0).position.y >= Fruits.ObjectArray.at(0).position.y - 1.1f) {
+
+        float AspectRatio = GetWindowWidth()/GetWindowHeight();
+        float HeightSpace_ = 35.0f;
+
+        float WidthSpace_ = HeightSpace_ * AspectRatio;
+
+        // corrigir: nao eh viavel criar instancia a cada quadro
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_int_distribution<i32> FruitX(-(WidthSpace_/2), +(WidthSpace_/2));
+        std::uniform_int_distribution<i32> FruitY(-(HeightSpace_/2), +(HeightSpace_/2));
+
+        Fruits.ObjectArray.at(0).position.x = FruitX(mt);
+        Fruits.ObjectArray.at(0).position.y = FruitY(mt);
+
+        s.Add(MyObjects.ObjectArray);
+    }
 }
 
 void LittleSnake::Processing() 
@@ -78,16 +99,8 @@ void LittleSnake::Render()
     glBindTexture(GL_TEXTURE0, MyTexture.GetTextureID());
     glBindVertexArray(MyMesh.GetVAO());
 
-    for (int i = 0; i < Background.ObjectArray.size(); i++) {
-        BgModel = glm::mat4(1.0f);
-        BgModel = glm::translate(BgModel, glm::vec3(-0.5f, -0.5f, 0.0f));
-        BgModel = glm::scale(BgModel, glm::vec3(10.0f));
-
-        GlobalShader.SetInt("Actor", 2);
-
-        GlobalShader.SetMat4("model", BgModel);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
-    }
+    std::cerr << "X: " << Fruits.ObjectArray.at(0).position.x << " | Y: " << Fruits.ObjectArray.at(0).position.y << "\n";
+    //std::cerr << "X: " << MyObjects.ObjectArray.at(0).position.x << " | Y: " << MyObjects.ObjectArray.at(0).position.y << "\n";
 
     for (int i = 0; i < MyObjects.ObjectArray.size(); i++) {
         MyModel = glm::mat4(1.0f);
@@ -101,8 +114,15 @@ void LittleSnake::Render()
         }
 
         GlobalShader.SetMat4("model", MyModel);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0); // aprwnder drwa instanced
     }
+
+    MyModel = glm::mat4(1.0f);
+    MyModel = glm::scale(MyModel, glm::vec3(0.06125f));
+    MyModel = glm::translate(MyModel, Fruits.ObjectArray.at(0).position);
+    GlobalShader.SetInt("Actor", 3);
+    GlobalShader.SetMat4("model", MyModel);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 
     MyHUD.Run(GetWindowWidth(), GetWindowHeight(), 0);
 }

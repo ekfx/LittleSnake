@@ -22,8 +22,7 @@ private:
     glm::mat4 MyModel;
     ObjectManager MyObjects;
 
-    ObjectManager Background;
-    glm::mat4 BgModel;
+    ObjectManager Fruits;
 
     Snake s;
 
