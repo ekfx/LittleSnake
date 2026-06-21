@@ -17,8 +17,10 @@ void main() {
         //FragColor = texture(texture0, vec2(TexCoord.x, TexCoord.y));
         FragColor = vec4(0.0, 0.2392, 0.3804, 1.0);
     } else if (Actor == 2) {
-        FragColor = texture(texture0, vec2(TexCoord.x, TexCoord.y));
+        FragColor = vec4(0.0078, 0.2863, 0.0, 1.0);
     } else if (Actor == 3) {
         FragColor = vec4(0.0157, 0.4549, 0.0, 1.0);
+    } else if (Actor == 4) {
+        FragColor = vec4(0.7255, 0.0039, 0.0039, 1.0);
     }
 }
