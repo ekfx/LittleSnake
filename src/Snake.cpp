@@ -1,6 +1,6 @@
 #include "Snake.h"
 
-void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float window_width, float window_height, float velocity) {
+void Snake::Start(ObjectManager& Body, int quantity, float window_width, float window_height, float velocity) {
     /*
         Pode parecer estranho à primeira vista por conta do seu grid 40x40 mas o que acontece é que 
         as coordenadas da cobra são INDEPENDENTES do OpenGL, por isso é necessário diminuir
@@ -8,7 +8,7 @@ void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float 
     */
 
     float AspectRatio = window_width/window_height;
-    float HeightSpace_ = 35.0f;
+    float HeightSpace_ = 28.0f;
 
     float WidthSpace_ = HeightSpace_ * AspectRatio;
 
@@ -18,42 +18,36 @@ void Snake::Start(std::vector<ObjectManager::Object>& Body, int quantity, float 
     Bottom       = -(HeightSpace_/2);
     Velocity     = velocity;
 
-    ObjectManager::Object TempObj;
-
     for (int i = 0; i < quantity; i++) {
-        TempObj.position.x = 0;
-        TempObj.position.y = 0;
-        TempObj.position.z = 0;
-
-        Body.push_back(TempObj);
+        Body.ObjectArray.push_back({});
     }
 }
 
-void Snake::Walk(std::vector<ObjectManager::Object>& Body) {
-    for (int i = Body.size() - 1; i > 0; i--) {
+void Snake::Walk(ObjectManager& Body) {
+    for (int i = Body.ObjectArray.size() - 1; i > 0; i--) {
         int j = i - 1;
-        Body.at(i).position = Body.at(j).position;
+        Body.ObjectArray.at(i).position = Body.ObjectArray.at(j).position;
     }
 
 
     // antecipar o movimento
     if (TargetAxis == ENGINE::AXIS::X_AXIS) {
-        if (Body.at(0).position.x + (Velocity*Direction) > Left && 
-            Body.at(0).position.x + (Velocity*Direction) < Right) {
+        if (Body.ObjectArray.at(0).position.x + (Velocity*Direction) > Left && 
+            Body.ObjectArray.at(0).position.x + (Velocity*Direction) < Right) {
 
-            Body.at(0).position.x += (Velocity*Direction);
+            Body.ObjectArray.at(0).position.x += (Velocity*Direction);
         } else {
-            Body.at(0).position.x = -Body.at(0).position.x;
+            Body.ObjectArray.at(0).position.x = -Body.ObjectArray.at(0).position.x;
         }
     }
 
     if (TargetAxis == ENGINE::AXIS::Y_AXIS) {
-        if (Body.at(0).position.y + (Velocity*Direction) > Bottom && 
-            Body.at(0).position.y + (Velocity*Direction) < Top) {
+        if (Body.ObjectArray.at(0).position.y + (Velocity*Direction) > Bottom && 
+            Body.ObjectArray.at(0).position.y + (Velocity*Direction) < Top) {
                 
-            Body.at(0).position.y += (Velocity*Direction);
+            Body.ObjectArray.at(0).position.y += (Velocity*Direction);
         } else {
-            Body.at(0).position.y = -Body.at(0).position.y + (Velocity*Direction);
+            Body.ObjectArray.at(0).position.y = -Body.ObjectArray.at(0).position.y + (Velocity*Direction);
         }
     }
 
@@ -91,7 +85,45 @@ void Snake::SetSpace(float window_width, float window_height, float v) {
     Velocity     = v;
 }
 
-void Snake::Add(std::vector<ObjectManager::Object>& Body) {
-    ObjectManager::Object TempObj;
-    Body.push_back(TempObj);
+void Snake::Add(ObjectManager& Body) {
+    Body.ObjectArray.push_back(Body.ObjectArray.at(0));
+}
+
+bool Snake::CheckCollision(ObjectManager& Body, ObjectManager& Fruit) {
+    if (Body.ObjectArray.at(0).position.x <= Fruit.ObjectArray.at(0).position.x + 1.1f &&
+        Body.ObjectArray.at(0).position.x >= Fruit.ObjectArray.at(0).position.x - 1.1f &&
+        Body.ObjectArray.at(0).position.y <= Fruit.ObjectArray.at(0).position.y + 1.1f &&
+        Body.ObjectArray.at(0).position.y >= Fruit.ObjectArray.at(0).position.y - 1.1f) {
+            return true;
+    }
+    return false;
+}
+
+void Snake::Chase(ObjectManager& Body, ObjectManager& Fruit) {
+    if (Fruit.ObjectArray.at(0).position.x > Body.ObjectArray.at(0).position.x) {
+        SetDirectionAxis(ENGINE::AXIS::X_AXIS, ENGINE::DIRECTION::FORWARD);
+    } else if (Fruit.ObjectArray.at(0).position.x < Body.ObjectArray.at(0).position.x) {
+        SetDirectionAxis(ENGINE::AXIS::X_AXIS, ENGINE::DIRECTION::BACKWARD);
+    } 
+    if (Fruit.ObjectArray.at(0).position.y > Body.ObjectArray.at(0).position.y) {
+        SetDirectionAxis(ENGINE::AXIS::Y_AXIS, ENGINE::DIRECTION::FORWARD);
+    } else if (Fruit.ObjectArray.at(0).position.y < Body.ObjectArray.at(0).position.y) {
+        SetDirectionAxis(ENGINE::AXIS::Y_AXIS, ENGINE::DIRECTION::BACKWARD);
+    } 
+}
+
+float Snake::GetLeft() {
+    return Left;
+}
+
+float Snake::GetRight() {
+    return Right;
+}
+
+float Snake::GetTop() {
+    return Top;
+}
+
+float Snake::GetBottom() {
+    return Bottom;
 }

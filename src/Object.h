@@ -21,10 +21,10 @@
 class ObjectManager {
 public:
     struct Object {
-        glm::vec3 position;
-        glm::vec3 velocity;
-        glm::vec4 color;
-        f32 weight;
+        glm::vec3 position = glm::vec3(1.0f);
+        glm::vec3 velocity = glm::vec3(1.0f);
+        glm::vec4 color = glm::vec4(1.0f);
+        f32 weight = 0;
     };
 
 public:

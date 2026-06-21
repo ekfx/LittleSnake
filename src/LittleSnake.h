@@ -6,11 +6,14 @@
 
 class LittleSnake : public Program {
 private:
+    
+
     /////////////////////    
     // Properties
     f32 CameraZoom = 1.0f;
-    f32 SnakeTick = 70.0f;
+    f32 SnakeTick = 35.0f;
     f32 SnakeDistanceParts = 1.0f;
+    bool AI = 1;
 
     /////////////////////
 
@@ -20,11 +23,14 @@ private:
     Mesh MyMesh;
     Texture MyTexture;
     glm::mat4 MyModel;
-    ObjectManager MyObjects;
-
+    
     ObjectManager Fruits;
+    
+    ObjectManager MySnake;
+    Snake snake;
 
-    Snake s;
+    ObjectManager MyEnemy;
+    Snake enemy;
 
     // Vertex
     u32 MyEBO[6] {
