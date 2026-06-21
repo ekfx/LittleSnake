@@ -4,6 +4,11 @@ This is a project where I will create a Snake Game, 2D as initial project and 3D
 ## About the Project
 As the latest project (StarCollector), here I'll consolidate more programming skill, put in practice good practices, optimize code and, if all run well, implement some light and 3D.
 
+## New Features since StarCollector
+- Simple Chase AI
+- Better Architecture
+- New Entity Class Snake
+
 ## Technologies
 - C++ 17
 - OpenGL
