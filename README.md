@@ -1,3 +1,5 @@
+![Game Screenshot](assets/program_gif.gif)
+
 # LittleSnake!
 This is a project where I will create a Snake Game, 2D as initial project and 3D if I do well. There's no much description, it is a Snake Game.
 
