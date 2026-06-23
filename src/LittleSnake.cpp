@@ -110,6 +110,10 @@ void LittleSnake::Render()
             GlobalShader.SetInt("Actor", 1);
         }
 
+        if (i == 0) {
+            GlobalShader.SetInt("Actor", 5);
+        }
+
         GlobalShader.SetMat4("model", MyModel);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0); // aprwnder drwa instanced
     }
@@ -126,7 +130,12 @@ void LittleSnake::Render()
                 GlobalShader.SetInt("Actor", 3);
             }
 
+            if (i == 0) {
+                GlobalShader.SetInt("Actor", 5);
+            }
+
             GlobalShader.SetMat4("model", MyModel);
+            // needs draw instanced
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0); // aprwnder drwa instanced
         }
     }
